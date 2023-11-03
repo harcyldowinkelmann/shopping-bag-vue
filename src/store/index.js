@@ -8,10 +8,14 @@ export default createStore({
   },
   mutations: {
     loadProducts(state, products) {
-      state.products = products
+      state.products = products;
     },
     addToBag(state, product) {
       state.productsInBag.push(product);
+    },
+    removeFromBag(state, productId) {
+      var updatedBag = state.productsInBag.filter(item => productId != item.id);
+      state.productsInBag = updatedBag;
     }
   },
   actions: {
@@ -23,7 +27,13 @@ export default createStore({
     },
 
     addToBag({ commit }, product) {
-      commit('addToBag', product)
+      commit('addToBag', product);
+    },
+
+    removeFromBag({ commit }, produtcId) {
+      if(confirm('Ter certeza que quer remover o item do carrinho?')) {
+        commit('removeFromBag', produtcId)
+      }
     }
   },
   modules: {
